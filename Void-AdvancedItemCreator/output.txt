@@ -1,0 +1,43 @@
+-- Void Advanced Item Creator - Output File
+-- Generated items will be appended below this line
+-- ==================================================
+
+-- Generated on: 2024-01-01 00:00:00
+-- Item: example_burger
+--------------------------------------------------
+ ['example_burger'] = {
+        label = 'Example Burger',
+        weight = 220,
+        allowArmed = false,
+        client = {
+            status = { hunger = 25 },
+            anim = 'eating',
+            prop = 'burger',
+            usetime = 2500,
+        },
+    },
+
+-- Generated on: 2024-01-01 00:00:00
+-- Item: example_water
+--------------------------------------------------
+ ['example_water'] = {
+        label = 'Example Water',
+        weight = 500,
+        allowArmed = false,
+        client = {
+            status = { thirst = 30 },
+            anim = 'drinking',
+            prop = 'cup',
+            usetime = 2500,
+        },
+    },
+
+-- Generated on: 2024-01-01 00:00:00
+-- Item: example_toolbox
+--------------------------------------------------
+ ['example_toolbox'] = {
+        label = 'Example Toolbox',
+        weight = 1000,
+        stack = 1,
+        description = 'A sturdy toolbox for repairs',
+    },

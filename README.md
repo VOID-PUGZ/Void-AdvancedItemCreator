@@ -93,11 +93,9 @@ For support, please check:
 
 ## License
 
-## Discord
-```lua
-Join My Discord For Support
--- https://discord.gg/7nkuEFWp --
-```
+## Join My Discord For Support
+
+- [discord](https://discord.gg/7nkuEFWp)
 
 
 This script is provided as-is for educational and server use purposes.

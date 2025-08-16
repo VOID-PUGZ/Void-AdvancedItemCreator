@@ -96,6 +96,7 @@ For support, please check:
 ## Join My Discord For Support
 
 - [discord](https://discord.gg/7nkuEFWp)
+- [Supportme](https://ko-fi.com/voidscriptsdonos)
 
 
 This script is provided as-is for educational and server use purposes.

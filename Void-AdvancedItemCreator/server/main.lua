@@ -6,7 +6,8 @@ local ItemData = {
     stackable = nil,
     description = nil,
     itemType = nil,
-    prop = nil
+    prop = nil,
+    inventorySystem = nil
 }
 
 
@@ -47,11 +48,23 @@ RegisterNetEvent('void-itemcreator:setProp', function(prop)
     TriggerClientEvent('void-itemcreator:notify', src, 'Item prop set to: ' .. prop, 'success')
 end)
 
+RegisterNetEvent('void-itemcreator:setInventorySystem', function(system)
+    local src = source
+    ItemData.inventorySystem = system
+    local systemName = system == 'qb' and 'qb-inventory' or 'ox_inventory'
+    TriggerClientEvent('void-itemcreator:notify', src, 'Inventory system set to: ' .. systemName, 'success')
+end)
+
 
 RegisterNetEvent('void-itemcreator:generateItem', function()
     local src = source
     if not ItemData.name or not ItemData.label or not ItemData.stackable then
         TriggerClientEvent('void-itemcreator:notify', src, 'Please fill in all required fields first!', 'error')
+        return
+    end
+    
+    if not ItemData.inventorySystem then
+        TriggerClientEvent('void-itemcreator:notify', src, 'Please select an inventory system first!', 'error')
         return
     end
 
@@ -67,7 +80,8 @@ RegisterNetEvent('void-itemcreator:generateItem', function()
             stackable = nil,
             description = nil,
             itemType = nil,
-            prop = nil
+            prop = nil,
+            inventorySystem = nil
         }
     else
         TriggerClientEvent('void-itemcreator:notify', src, 'Failed to save item to file!', 'error')
@@ -78,13 +92,24 @@ end)
 function GenerateItemCode()
     local itemCode = ""
     
-    if ItemData.itemType == 'food' or ItemData.itemType == 'drink' then
-        local statusType = ItemData.itemType == 'food' and 'hunger' or 'thirst'
-        local statusValue = ItemData.itemType == 'food' and 25 or 30
-        local anim = ItemData.itemType == 'food' and 'eating' or 'drinking'
-        local prop = ItemData.itemType == 'food' and 'burger' or 'cup'
-        
+    if ItemData.inventorySystem == 'qb' then
+        -- qb-inventory format
         itemCode = string.format([[
+%s					 = { name = '%s', 			  	  	      label = '%s', 			   weight = 0, 		       type = 'item', 		    image = '%s.png', 				     unique = false, 	       useable = true, 	    shouldClose = true,       combinable = nil,   description = '%s'},]], 
+            ItemData.name,
+            ItemData.name, 
+            ItemData.label, 
+            ItemData.name,
+            ItemData.description or 'No description provided'
+        )
+    else
+        -- ox_inventory format
+        if ItemData.itemType == 'food' or ItemData.itemType == 'drink' then
+            local statusType = ItemData.itemType == 'food' and 'hunger' or 'thirst'
+            local statusValue = ItemData.itemType == 'food' and 25 or 30
+            local anim = ItemData.itemType == 'food' and 'eating' or 'drinking'
+            
+            itemCode = string.format([[
  ['%s'] = {
         label = '%s',
         stackable = %s,
@@ -96,28 +121,29 @@ function GenerateItemCode()
             usetime = %d,
         },
     },]], 
-            ItemData.name, 
-            ItemData.label, 
-            tostring(ItemData.stackable), 
-            tostring(Config.Defaults.allowArmed), 
-            statusType, 
-            statusValue, 
-            anim, 
-            ItemData.prop or 'prop_cs_burger_01', 
-            Config.Defaults.usetime
-        )
-    else
-        itemCode = string.format([[
+                ItemData.name, 
+                ItemData.label, 
+                tostring(ItemData.stackable), 
+                tostring(Config.Defaults.allowArmed), 
+                statusType, 
+                statusValue, 
+                anim, 
+                ItemData.prop or 'prop_cs_burger_01', 
+                Config.Defaults.usetime
+            )
+        else
+            itemCode = string.format([[
  ['%s'] = {
         label = '%s',
         stackable = %s,
         description = '%s',
     },]], 
-            ItemData.name, 
-            ItemData.label, 
-            tostring(ItemData.stackable), 
-            ItemData.description or ''
-        )
+                ItemData.name, 
+                ItemData.label, 
+                tostring(ItemData.stackable), 
+                ItemData.description or ''
+            )
+        end
     end
     
     return itemCode
@@ -161,7 +187,8 @@ QBCore.Commands.Add('clearitemdata', 'Clear current item data', {}, false, funct
             stackable = nil,
             description = nil,
             itemType = nil,
-            prop = nil
+            prop = nil,
+            inventorySystem = nil
         }
     TriggerClientEvent('void-itemcreator:notify', src, 'Item data cleared!', 'success')
 end)

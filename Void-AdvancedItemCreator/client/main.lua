@@ -59,6 +59,14 @@ function OpenItemCreator()
             end
         },
         {
+            title = 'Inventory System',
+            description = 'Choose between qb-inventory or ox_inventory',
+            icon = 'fas fa-boxes',
+            onSelect = function()
+                OpenInventorySystemInput()
+            end
+        },
+        {
             title = 'Prop Selection',
             description = 'Choose the prop model for the item',
             icon = 'fas fa-cube',
@@ -467,6 +475,40 @@ function OpenDescriptionInput()
         Wait(100)
         OpenItemCreator()
     end
+end
+
+function OpenInventorySystemInput()
+    local options = {
+        {
+            title = 'qb-inventory',
+            description = 'Use qb-inventory format (legacy)',
+            icon = 'fas fa-box',
+            onSelect = function()
+                TriggerServerEvent('void-itemcreator:setInventorySystem', 'qb')
+                Wait(100)
+                OpenItemCreator()
+            end
+        },
+        {
+            title = 'ox_inventory',
+            description = 'Use ox_inventory format (modern)',
+            icon = 'fas fa-cube',
+            onSelect = function()
+                TriggerServerEvent('void-itemcreator:setInventorySystem', 'ox')
+                Wait(100)
+                OpenItemCreator()
+            end
+        }
+    }
+
+    lib.registerContext({
+        id = 'inventory_system_selector',
+        title = 'Select Inventory System',
+        menu = 'item_creator_main',
+        options = options
+    })
+
+    lib.showContext('inventory_system_selector')
 end
 
 function OpenItemTypeInput()

@@ -66,7 +66,14 @@ function OpenItemCreator()
                 OpenPropSelection()
             end
         },
-
+        {
+            title = 'Image Name',
+            description = 'Choose the image name & extension for the item',
+            icon = 'fas fa-utensils',
+            onSelect = function()
+                OpenImageSelector()
+            end
+        },
         {
             title = 'Generate Item',
             description = 'Create the item and save to output.txt',
@@ -76,13 +83,11 @@ function OpenItemCreator()
             end
         }
     }
-
     lib.registerContext({
         id = 'item_creator_main',
         title = 'Advanced Item Creator',
         options = options
     })
-
     lib.showContext('item_creator_main')
 end
 
@@ -146,14 +151,12 @@ function OpenStackableInput()
             end
         }
     }
-
     lib.registerContext({
         id = 'stackable_selector',
         title = 'Select Stackable Option',
         menu = 'item_creator_main',
         options = options
     })
-
     lib.showContext('stackable_selector')
 end
 
@@ -192,14 +195,12 @@ function OpenPropSelection()
             end
         }
     }
-
     lib.registerContext({
         id = 'prop_category_selector',
         title = 'Select Prop Category',
         menu = 'item_creator_main',
         options = options
     })
-
     lib.showContext('prop_category_selector')
 end
 
@@ -254,14 +255,12 @@ function OpenFoodProps()
             end
         }
     }
-
     lib.registerContext({
         id = 'food_props',
         title = 'Food Props',
         menu = 'prop_category_selector',
         options = options
     })
-
     lib.showContext('food_props')
 end
 
@@ -316,14 +315,12 @@ function OpenDrinkProps()
             end
         }
     }
-
     lib.registerContext({
         id = 'drink_props',
         title = 'Drink Props',
         menu = 'prop_category_selector',
         options = options
     })
-
     lib.showContext('drink_props')
 end
 
@@ -378,14 +375,12 @@ function OpenWeaponProps()
             end
         }
     }
-
     lib.registerContext({
         id = 'weapon_props',
         title = 'Weapon & Tool Props',
         menu = 'prop_category_selector',
         options = options
     })
-
     lib.showContext('weapon_props')
 end
 
@@ -522,5 +517,6 @@ end
 RegisterNetEvent('void-itemcreator:notify', function(message, type)
     QBCore.Functions.Notify(message, type or 'primary')
 end)
+
 
 

@@ -1,7 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 local PlayerData = {}
 
-
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
   PlayerData = QBCore.Functions.GetPlayerData()
 end)
@@ -10,11 +9,9 @@ RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
   PlayerData = {}
 end)
 
-
 RegisterCommand(Config.Command, function()
   OpenItemCreator()
 end, false)
-
 
 function OpenItemCreator()
   local options = {
@@ -101,7 +98,6 @@ function OpenItemNameInput()
       placeholder = 'e.g., burger'
     }
   })
-
   if input then
     TriggerServerEvent('void-itemcreator:setItemName', input[1])
     Wait(100)
@@ -119,7 +115,6 @@ function OpenItemLabelInput()
       placeholder = 'e.g., Delicious Burger'
     }
   })
-
   if input then
     TriggerServerEvent('void-itemcreator:setItemLabel', input[1])
     Wait(100)
@@ -434,14 +429,12 @@ function OpenMiscProps()
       end
     }
   }
-
   lib.registerContext({
     id = 'misc_props',
     title = 'Miscellaneous Props',
     menu = 'prop_category_selector',
     options = options
   })
-
   lib.showContext('misc_props')
 end
 
